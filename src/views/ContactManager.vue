@@ -44,7 +44,7 @@
     </div>
   </div>
 
-  <div class="container mt-3" v-if="contacts.length > 0">
+  <div class="container mt-3" v-if="contacts && contacts.length > 0">
     <div class="row">
       <div class="col-md-6 col-sm-12 col-lg-6" v-for="contact of elements" :key="contact">
         <div class="card my-2 list-group-item-success  shadow-lg">
@@ -110,7 +110,7 @@ export default {
   components: {Spinner},
   data() {
     return {
-      deleteContact: null,
+      delete_contact: null,
       search: null,
       loading: false,
       contacts: [],
@@ -123,7 +123,7 @@ export default {
   },
   methods: {
     setDeleteContactId(contactId) {
-      this.deleteContact = this.contacts.filter((contact) => {
+      this.delete_contact = this.contacts.filter((contact) => {
         return contact.id === contactId
       });
 
@@ -133,7 +133,7 @@ export default {
         this.elements = this.contacts.filter((contact) => {
           return contact.name.toLowerCase().includes(this.search.toLowerCase()) ||
               contact.mobile.toLowerCase().includes(this.search.toLowerCase())
-        })
+        });
       } else {
         this.loadData();
         this.elements = this.contacts;
@@ -141,19 +141,19 @@ export default {
     },
     async deleteContact(id) {
       const response = await ContactService.deleteContact(id);
-      if (response) {
+      if (response.success) {
         await this.loadData();
       }
     },
     async loadData() {
       try {
         this.loading = true;
-        let iData = await ContactService.getAllContacts();
-        this.contacts = iData.data;
+        const iData = await ContactService.getAllContacts();
+        this.contacts = iData.data.data;
         this.elements = this.contacts;
         this.loading = false;
-      } catch (error) {
-        this.errorMessage = error;
+      } catch (err) {
+        this.errorMessage = err;
         this.loading = false;
       }
     }

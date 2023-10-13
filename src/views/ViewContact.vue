@@ -69,9 +69,9 @@ export default {
     try {
       this.loading = true;
       const response = await ContactService.getContactById(this.id);
-      this.contact = response.data;
+      this.contact = response.data.data;
       const groupResponse = await ContactService.getGroupById(this.contact.groupId);
-      this.group = groupResponse.data;
+      this.group = groupResponse.data.data;
       this.loading = false;
     } catch (error) {
       this.errorMessage = error;

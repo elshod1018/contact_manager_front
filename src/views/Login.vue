@@ -24,6 +24,7 @@
 
 <script>
 import {AuthService} from "@/services/AuthService";
+import axios from "axios";
 
 export default {
   name: 'Login',
@@ -32,26 +33,27 @@ export default {
     return {
       loginData: {
         email: '',
-        password: ''
+        password: '',
       }
     }
+  },
+  async mounted() {
   },
   methods: {
     async createLogin() {
       try {
         const response = await AuthService.login(this.loginData);
-        if (response) {
-          console.log(response);
-          localStorage.setItem('accessToken', response.data.accessToken);
-          localStorage.setItem('refreshToken', response.data.refreshToken);
-          localStorage.setItem('accessTokenExpiry', response.data.accessTokenExpiry);
-          localStorage.setItem('refreshTokenExpiry', response.data.refreshTokenExpiry);
-          this.$router.push('/contacts');
+        console.log('response', response)
+        if (response.data.success) {
+          localStorage.setItem('accessToken', response.data.data.accessToken);
+          localStorage.setItem('refreshToken', response.data.data.refreshToken);
+          // this.$router.push('/contacts');
+        } else {
+          this.errorMessage = response.data.error;
         }
       } catch (error) {
         console.log(error)
       }
-      console.log(this.loginData)
     }
   }
 }

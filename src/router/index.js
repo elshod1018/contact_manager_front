@@ -1,4 +1,4 @@
-import {createRouter, createWebHashHistory} from 'vue-router'
+import {createRouter, createWebHashHistory, createWebHistory} from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import ContactManager from "@/views/ContactManager.vue";
 import AddContact from "@/views/AddContact.vue";
@@ -12,7 +12,7 @@ const routes = [
     {
         path: '/',
         name: 'HomeView',
-        redirect: "/contacts",
+        redirect: '/contacts',
         component: HomeView
     }, {
         path: '/contacts',
@@ -46,7 +46,7 @@ const routes = [
 ]
 
 const router = createRouter({
-    history: createWebHashHistory('/'),
+    history: createWebHistory(),
     routes: routes
 })
 

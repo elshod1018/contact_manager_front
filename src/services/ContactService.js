@@ -1,11 +1,11 @@
-import axios from "axios";
+import axios from "../axios";
 
 export class ContactService {
     // static baseUrl = `http://localhost:9090`;
     static contactsUrl = `/contacts`
     static groupsUrl = `/groups`
 
-    static getAllContacts() {
+    static async getAllContacts() {
         return axios.get(`${this.contactsUrl}/all`);
     }
 

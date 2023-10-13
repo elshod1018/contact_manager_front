@@ -125,13 +125,13 @@ export default {
       }
       try {
         const response = await AuthService.register(this.signupData);
-        if (response) {
-          this.activationData.userId = response.data.id;
+        if (response.success) {
+          this.activationData.userId = response.data.data.id;
           this.activation = true;
         }
         console.log(response)
       } catch (error) {
-        this.errorMessage = error.response.data.error.errorMessage;
+        this.errorMessage = error;
         console.log(error)
       }
     }

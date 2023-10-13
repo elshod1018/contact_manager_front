@@ -158,9 +158,9 @@ export default {
     try {
       this.loading = true;
       const contactResponse = await ContactService.getContactById(this.id);
-      this.contact = contactResponse.data;
+      this.contact = contactResponse.data.data;
       const groupsResponse = await ContactService.getAllGroups();
-      this.groups = groupsResponse.data;
+      this.groups = groupsResponse.data.data;
       this.loading = false;
     } catch (error) {
       this.errorMessage = error;
@@ -179,7 +179,7 @@ export default {
           return;
         }
         const response = await ContactService.updateContact(this.id, this.contact);
-        if (response) {
+        if (response.success) {
           return this.$router.push('/');
         }
       } catch (err) {

@@ -163,7 +163,7 @@ export default {
           return;
         }
         const response = await ContactService.createContact(this.contact);
-        if (response) {
+        if (response.success) {
           return this.$router.push('/');
         }
       } catch (err) {
